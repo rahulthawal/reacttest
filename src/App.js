@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     setGladiatorData(GladiatorService.get());
-  });
+  },[]);
 
   return (
     <div style={{
