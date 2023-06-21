@@ -8,7 +8,7 @@ function App() {
   const [gladiatorData, setGladiatorData] = useState([]);
   const [gladiatorDataColumns] = useState([{
     "field": "gladiator_name",
-    "headerName": "Glaidator Name",
+    "headerName": "Gladiator Name",
     "width": 250
   },
   {
