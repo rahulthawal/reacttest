@@ -2,12 +2,11 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import GladiatorService from "./services/gladiatorService.js";
 import React from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { DataGrid } from '@mui/x-data-grid';
 
 function App() {
   const [gladiatorData, setGladiatorData] = useState([]);
-  const [gladiatorDataColumns, setGladiatorDataColumns] = useState([{
+  const [gladiatorDataColumns] = useState([{
     "field": "gladiator_name",
     "headerName": "Glaidator Name",
     "width": 250
@@ -30,8 +29,10 @@ function App() {
 
   useEffect(() => {
     const data = GladiatorService.get();
-    data.forEach((item, index) => item.id = (index + 1));
-    setGladiatorData(data);
+    if (data instanceof Array) {
+      data.forEach((item, index) => item.id = (index + 1));
+      setGladiatorData(data);
+    }
   }, []);
 
   return (
@@ -44,27 +45,21 @@ function App() {
       <h4>Gladiator Services</h4>
 
       <div>
-        <div >
-          <div >
-            <ul>
-              {gladiatorData && gladiatorData.length ? (
-                <DataGrid style={{ maxWidth: '700px', width: "100%" }}
-                  rows={gladiatorData}
-                  columns={gladiatorDataColumns}
-                  initialState={{
-                    pagination: {
-                      paginationModel: { page: 0, pageSize: 5 },
-                    },
-                  }}
-                  pageSizeOptions={[5, 10]}
-                />
-              ) : (
-                <h1 variant="primary">No Records found</h1>
-              )
-              }
-            </ul>
-          </div>
-        </div>
+        {gladiatorData && gladiatorData.length ? (
+          <DataGrid style={{ maxWidth: '700px', width: "100%" }}
+            rows={gladiatorData}
+            columns={gladiatorDataColumns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+          />
+        ) : (
+          <h1 variant="primary">No Records found</h1>
+        )
+        }
       </div>
     </div>
   );
