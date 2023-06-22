@@ -28,11 +28,12 @@ function App() {
   }]);
 
   useEffect(() => {
-    const data = GladiatorService.get();
-    if (data instanceof Array) {
-      data.forEach((item, index) => item.id = (index + 1));
-      setGladiatorData(data);
-    }
+    GladiatorService.get().then(data => {
+      if (data instanceof Array) {
+        data.forEach((item, index) => item.id = (index + 1));
+        setGladiatorData(data);
+      }
+    });
   }, []);
 
   return (
